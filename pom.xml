@@ -20,37 +20,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- rgo-wm modules -->
-        <rgo-wm.version>24.0.0-SNAPSHOT</rgo-wm.version>
-        <!-- spring-boot -->
-        <spring-boot.version>3.3.0</spring-boot.version>
+        <!-- rgo-wm-dependencies -->
+        <rgo-wm-dependencies.version>24.0.0-SNAPSHOT</rgo-wm-dependencies.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- rgo-wm modules -->
+            <!-- rgo-wm-dependencies -->
             <dependency>
                 <groupId>ru.gold.ordance</groupId>
-                <artifactId>rgo-wm-common-utils-asserts</artifactId>
-                <version>${rgo-wm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.gold.ordance</groupId>
-                <artifactId>rgo-wm-common-test-utils-random</artifactId>
-                <version>${rgo-wm.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- /rgo-wm modules -->
-
-            <!-- spring-boot -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
+                <artifactId>rgo-wm-dependencies</artifactId>
+                <version>${rgo-wm-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- /spring-boot -->
+            <!-- /rgo-wm-dependencies -->
         </dependencies>
     </dependencyManagement>
 </project>
