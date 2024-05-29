@@ -12,12 +12,11 @@ public class MediaDto {
     private final int year;
 
     private MediaDto(Builder builder) {
-        this.uuid = Asserts.nonNull(builder.uuid, "'uuid' must not be null");
+        this.uuid = builder.uuid;
         this.name = Asserts.nonNull(builder.name, "'name' must not be null");
         this.year = Asserts.nonNegative(builder.year, "'year' must not be negative");
     }
 
-    @Nonnull
     public UUID getUuid() {
         return uuid;
     }

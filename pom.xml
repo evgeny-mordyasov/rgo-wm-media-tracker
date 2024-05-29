@@ -12,6 +12,7 @@
 
     <modules>
         <module>rgo-wm-media-tracker-service-api</module>
+        <module>rgo-wm-media-tracker-service</module>
     </modules>
 
     <properties>
@@ -35,6 +36,14 @@
                 <scope>import</scope>
             </dependency>
             <!-- /rgo-wm-dependencies -->
+
+            <!-- self-modules -->
+            <dependency>
+                <groupId>ru.gold.ordance</groupId>
+                <artifactId>rgo-wm-media-tracker-service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- /self-modules -->
         </dependencies>
     </dependencyManagement>
 </project>

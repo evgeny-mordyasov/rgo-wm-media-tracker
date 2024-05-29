@@ -31,20 +31,7 @@ class MediaDtoTest {
                 .setYear(randomPositiveInt())
                 .build();
 
-        assertThat(media.getUuid()).isNotNull();
         assertThat(media.getName()).isNotNull();
-    }
-
-    @Test
-    void uuidIsNull() {
-        MediaDto.Builder builder = MediaDto.builder()
-                .setUuid(null)
-                .setName(randomString())
-                .setYear(randomPositiveInt());
-
-        assertThatThrownBy(builder::build)
-                .isInstanceOf(AssertsException.class)
-                .hasMessage("'uuid' must not be null");
     }
 
     @Test
