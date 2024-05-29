@@ -5,6 +5,7 @@ import rgo.wm.common.utils.asserts.AssertsException;
 
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static rgo.wm.common.test.utils.random.IntRandom.randomPositiveInt;
@@ -20,6 +21,18 @@ class MediaDtoTest {
                 .setYear(randomPositiveInt());
 
         assertThatNoException().isThrownBy(builder::build);
+    }
+
+    @Test
+    void gettersReturnNonNull() {
+        MediaDto media = MediaDto.builder()
+                .setUuid(UUID.randomUUID())
+                .setName(randomString())
+                .setYear(randomPositiveInt())
+                .build();
+
+        assertThat(media.getUuid()).isNotNull();
+        assertThat(media.getName()).isNotNull();
     }
 
     @Test
