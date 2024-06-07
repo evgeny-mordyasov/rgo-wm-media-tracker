@@ -3,6 +3,7 @@ package rgo.wm.media.tracker.service.api;
 import rgo.wm.common.utils.asserts.Asserts;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 import java.util.UUID;
 
 public class MediaDto {
@@ -13,8 +14,8 @@ public class MediaDto {
 
     private MediaDto(Builder builder) {
         this.uuid = builder.uuid;
-        this.name = Asserts.nonNull(builder.name, "'name' must not be null");
-        this.year = Asserts.nonNegative(builder.year, "'year' must not be negative");
+        this.name = Asserts.nonNull(builder.name, "name");
+        this.year = Asserts.nonNegative(builder.year, "year");
     }
 
     public UUID getUuid() {
@@ -28,6 +29,19 @@ public class MediaDto {
 
     public int getYear() {
         return year;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MediaDto mediaDto = (MediaDto) o;
+        return year == mediaDto.year && Objects.equals(uuid, mediaDto.uuid) && Objects.equals(name, mediaDto.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid, name, year);
     }
 
     @Override

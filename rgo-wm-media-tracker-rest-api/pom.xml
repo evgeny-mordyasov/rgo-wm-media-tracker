@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.gold.ordance</groupId>
+        <artifactId>rgo-wm-media-tracker</artifactId>
+        <version>24.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>rgo-wm-media-tracker-rest-api</artifactId>
+
+    <dependencies>
+        <!-- self-modules -->
+        <dependency>
+            <groupId>ru.gold.ordance</groupId>
+            <artifactId>rgo-wm-media-tracker-service</artifactId>
+        </dependency>
+        <!-- /self-modules -->
+
+        <!-- rgo-wm modules -->
+        <dependency>
+            <groupId>ru.gold.ordance</groupId>
+            <artifactId>rgo-wm-common-utils-rest-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ru.gold.ordance</groupId>
+            <artifactId>rgo-wm-common-utils-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ru.gold.ordance</groupId>
+            <artifactId>rgo-wm-common-test-utils-random</artifactId>
+        </dependency>
+        <!-- /rgo-wm modules -->
+
+        <!-- test -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- /test -->
+    </dependencies>
+</project>
