@@ -19,6 +19,13 @@
         </dependency>
         <!-- /self-modules -->
 
+        <!-- rgo-wm modules -->
+        <dependency>
+            <groupId>ru.gold.ordance</groupId>
+            <artifactId>rgo-wm-spring-autoconfig-common</artifactId>
+        </dependency>
+        <!-- /rgo-wm modules -->
+
         <!-- spring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
