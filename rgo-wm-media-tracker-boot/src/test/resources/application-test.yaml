@@ -1,5 +1,6 @@
-logging:
-  config: classpath:logback-production.xml
+spring:
+  main:
+    banner-mode: off
 
 management:
   endpoint:
