@@ -1,7 +1,7 @@
-package rgo.wm.media.tracker.service;
+package rgo.wm.media.tracker.persistence;
 
-import rgo.wm.media.tracker.service.api.MediaDto;
-import rgo.wm.media.tracker.service.api.MediaService;
+import rgo.wm.media.tracker.persistence.api.Media;
+import rgo.wm.media.tracker.persistence.api.MediaRepository;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -9,30 +9,30 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InMemoryMediaService implements MediaService {
+public class InMemoryRepository implements MediaRepository {
 
-    private final Map<UUID, MediaDto> storage;
+    private final Map<UUID, Media> storage;
 
-    public InMemoryMediaService() {
+    public InMemoryRepository() {
         this.storage = new ConcurrentHashMap<>();
     }
 
     @Nonnull
     @Override
-    public List<MediaDto> findAll() {
+    public List<Media> findAll() {
         return storage.values().stream().toList();
     }
 
     @Nonnull
     @Override
-    public MediaDto save(@Nonnull MediaDto media) {
-        MediaDto assigned = assignUUID(media);
+    public Media save(@Nonnull Media media) {
+        Media assigned = assignUUID(media);
         storage.put(assigned.getUuid(), assigned);
         return assigned;
     }
 
-    private MediaDto assignUUID(MediaDto media) {
-        return MediaDto.builder()
+    private Media assignUUID(Media media) {
+        return Media.builder()
                 .setUuid(UUID.randomUUID())
                 .setName(media.getName())
                 .setYear(media.getYear())

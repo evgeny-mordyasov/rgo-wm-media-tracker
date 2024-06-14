@@ -1,22 +1,20 @@
-package rgo.wm.media.tracker.service.api;
-
-import rgo.wm.common.utils.asserts.Asserts;
+package rgo.wm.media.tracker.persistence.api;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.UUID;
 
-public class MediaDto {
+public class Media {
 
     private final UUID uuid;
     private final String name;
     private final int year;
 
-    private MediaDto(Builder builder) {
+    private Media(Builder builder) {
         this.uuid = builder.uuid;
-        this.name = Asserts.nonNull(builder.name, "name");
-        this.year = Asserts.nonNegative(builder.year, "year");
+        this.name = builder.name;
+        this.year = builder.year;
     }
 
     @Nullable
@@ -37,7 +35,7 @@ public class MediaDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MediaDto mediaDto = (MediaDto) o;
+        Media mediaDto = (Media) o;
         return year == mediaDto.year && Objects.equals(uuid, mediaDto.uuid) && Objects.equals(name, mediaDto.name);
     }
 
@@ -48,7 +46,7 @@ public class MediaDto {
 
     @Override
     public String toString() {
-        return "MediaDto{" +
+        return "Media{" +
                 "uuid=" + uuid +
                 ", name='" + name + '\'' +
                 ", year=" + year +
@@ -83,8 +81,8 @@ public class MediaDto {
             return this;
         }
 
-        public MediaDto build() {
-            return new MediaDto(this);
+        public Media build() {
+            return new Media(this);
         }
     }
 }
