@@ -24,15 +24,27 @@ class HealthCheckTest {
     private MockMvc mvc;
 
     @Test
+    void health_up() throws Exception {
+        checkUp("/actuator/health");
+    }
+
+    @Test
     void livenessProbe_up() throws Exception {
-        mvc.perform(get("/actuator/health/liveness"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.status").value(Status.UP.getCode()));
+        checkUp("/actuator/health/liveness");
     }
 
     @Test
     void readinessProbe_up() throws Exception {
-        mvc.perform(get("/actuator/health/readiness"))
+        checkUp("/actuator/health/readiness");
+    }
+
+    @Test
+    void db_up() throws Exception {
+        checkUp("/actuator/health/db");
+    }
+
+    private void checkUp(String url) throws Exception {
+        mvc.perform(get(url))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value(Status.UP.getCode()));
     }
