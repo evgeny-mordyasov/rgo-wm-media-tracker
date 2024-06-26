@@ -1,3 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/media
+    username: media
+    password: qwe123
+
 logging:
   config: classpath:logback-production.xml
 

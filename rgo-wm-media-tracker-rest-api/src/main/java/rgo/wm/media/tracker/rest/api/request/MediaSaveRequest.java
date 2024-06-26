@@ -8,7 +8,7 @@ public class MediaSaveRequest {
     @NotEmpty(message = "Name must not be null or empty.")
     private String name;
 
-    @Min(value = 1895, message = "Year must be greater than 1895.")
+    @Min(value = 1895, message = "Year must be greater than 1894.")
     private int year;
 
     public String getName() {

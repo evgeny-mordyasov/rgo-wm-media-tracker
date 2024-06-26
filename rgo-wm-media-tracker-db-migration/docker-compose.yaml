@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  postgresql:
+    build: ./
+    image: media-db
+    container_name: media-db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  flyway-manual-media:
+    image: flyway/flyway:latest
+    container_name: flyway_manual_media
+    command: -connectRetries=60
+      -configFiles=/flyway/conf/manual.conf
+      migrate
+
+    volumes:
+      - ./src/main/resources/db/manual:/flyway/sql
+      - ./src/main/resources/flyway:/flyway/conf
+    depends_on:
+      postgresql:
+        condition: service_healthy
+
+  stub-container:
+    image: ogajun/stub-container:latest
+    container_name: stub_container
+    depends_on:
+      flyway-manual-media:
+        condition: service_completed_successfully

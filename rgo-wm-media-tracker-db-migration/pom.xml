@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.gold.ordance</groupId>
+        <artifactId>rgo-wm-media-tracker</artifactId>
+        <version>24.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>rgo-wm-media-tracker-db-migration</artifactId>
+
+    <properties>
+        <docker.tag>24.0.0</docker.tag>
+        <docker-release.phase>deploy</docker-release.phase>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <version>3.1.0</version>
+                    <executions>
+                        <execution>
+                            <id>docker-deploy</id>
+                            <phase>${docker-release.phase}</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <executable>${docker-file.executable}</executable>
+                        <arguments>
+                            <argument>${docker.tag}</argument>
+                        </arguments>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+
+            <properties>
+                <docker-file.executable>docker-deploy.cmd</docker-file.executable>
+            </properties>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <groupId>org.codehaus.mojo</groupId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>docker-db-dev</id>
+
+            <properties>
+                <docker-release.phase>package</docker-release.phase>
+            </properties>
+        </profile>
+    </profiles>
+</project>

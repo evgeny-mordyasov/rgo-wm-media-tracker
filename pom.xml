@@ -17,6 +17,8 @@
         <module>rgo-wm-media-tracker-boot</module>
         <module>rgo-wm-media-tracker-persistence-api</module>
         <module>rgo-wm-media-tracker-persistence</module>
+        <module>rgo-wm-media-tracker-db-migration</module>
+        <module>rgo-wm-media-tracker-tests</module>
     </modules>
 
     <properties>
@@ -66,6 +68,17 @@
                 <groupId>ru.gold.ordance</groupId>
                 <artifactId>rgo-wm-media-tracker-persistence</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.gold.ordance</groupId>
+                <artifactId>rgo-wm-media-tracker-db-migration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.gold.ordance</groupId>
+                <artifactId>rgo-wm-media-tracker-tests</artifactId>
+                <version>${project.version}</version>
+                <scope>test</scope>
             </dependency>
             <!-- /self-modules -->
         </dependencies>

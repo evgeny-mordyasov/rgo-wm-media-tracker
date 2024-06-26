@@ -17,6 +17,10 @@
             <groupId>ru.gold.ordance</groupId>
             <artifactId>rgo-wm-media-tracker-rest-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ru.gold.ordance</groupId>
+            <artifactId>rgo-wm-media-tracker-tests</artifactId>
+        </dependency>
         <!-- /self-modules -->
 
         <!-- rgo-wm modules -->

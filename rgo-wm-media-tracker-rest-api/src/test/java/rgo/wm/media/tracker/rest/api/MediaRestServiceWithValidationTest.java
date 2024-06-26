@@ -52,7 +52,7 @@ class MediaRestServiceWithValidationTest {
         InvalidRqHttpResponse response = (InvalidRqHttpResponse) restService.save(rq);
 
         assertThat(response.getStatus()).isEqualTo(HttpResponse.INVALID_RQ_STATUS);
-        assertThat(response.errorDetails()).hasSize(1).contains(ErrorDetail.of("Year must be greater than 1895."));
+        assertThat(response.errorDetails()).hasSize(1).contains(ErrorDetail.of("Year must be greater than 1894."));
     }
 
     @Test

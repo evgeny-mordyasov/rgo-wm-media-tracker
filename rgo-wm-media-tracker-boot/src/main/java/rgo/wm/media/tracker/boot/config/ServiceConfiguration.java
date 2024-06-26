@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import rgo.wm.common.utils.validator.ValidatorAdapter;
 import rgo.wm.common.utils.validator.Validators;
-import rgo.wm.media.tracker.persistence.InMemoryRepository;
+import rgo.wm.media.tracker.persistence.api.MediaRepository;
 import rgo.wm.media.tracker.service.MediaServiceImpl;
 import rgo.wm.media.tracker.service.api.MediaService;
 
@@ -17,7 +17,7 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public MediaService mediaService() {
-        return new MediaServiceImpl(new InMemoryRepository());
+    public MediaService mediaService(MediaRepository repository) {
+        return new MediaServiceImpl(repository);
     }
 }

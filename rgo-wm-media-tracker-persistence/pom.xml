@@ -18,6 +18,10 @@
             <groupId>ru.gold.ordance</groupId>
             <artifactId>rgo-wm-media-tracker-persistence-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ru.gold.ordance</groupId>
+            <artifactId>rgo-wm-media-tracker-db-migration</artifactId>
+        </dependency>
         <!-- /self-modules -->
 
         <!-- rgo-wm modules -->
@@ -39,6 +43,10 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
         </dependency>
         <!-- /db -->
 
