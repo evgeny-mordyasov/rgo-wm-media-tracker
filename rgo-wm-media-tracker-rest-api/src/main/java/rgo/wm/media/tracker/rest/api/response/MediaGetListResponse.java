@@ -6,20 +6,10 @@ import rgo.wm.media.tracker.service.api.MediaDto;
 
 import java.util.List;
 
-public class MediaGetListResponse implements HttpResponse {
-
-    private final List<MediaDto> media;
-
-    public MediaGetListResponse(List<MediaDto> media) {
-        this.media = media;
-    }
+public record MediaGetListResponse(List<MediaDto> media) implements HttpResponse {
 
     @Override
-    public HttpStatus getStatus() {
+    public HttpStatus status() {
         return SUCCESSFUL_STATUS;
-    }
-
-    public List<MediaDto> getMedia() {
-        return media;
     }
 }

@@ -30,7 +30,7 @@ public class PostgresMediaRepository implements MediaRepository {
                 .list();
     }
 
-    private Media findByUuid(String uuid) {
+    private Media findByUuid(UUID uuid) {
         return jdbc.sql(MediaQueries.findByUuid())
                 .param("uuid", uuid)
                 .query(MEDIA_MAPPER)
@@ -46,7 +46,7 @@ public class PostgresMediaRepository implements MediaRepository {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.sql(MediaQueries.save()).paramSource(params).update(keyHolder, "uuid");
-        String uuid = keyHolder.getKeyAs(String.class);
+        UUID uuid = keyHolder.getKeyAs(UUID.class);
         if (uuid == null) {
             throw new KeyRetrievalException("Failed to retrieve uuid after saving media.");
         }
@@ -83,7 +83,7 @@ public class PostgresMediaRepository implements MediaRepository {
             return """
                     SELECT uuid,
                            name,
-                           year,
+                           year
                       FROM %s
                     """.formatted(TABLE_NAME);
         }

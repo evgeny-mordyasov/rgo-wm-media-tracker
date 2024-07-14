@@ -19,6 +19,12 @@ public class MediaDto {
         this.year = Asserts.nonNegative(builder.year, "year");
     }
 
+    MediaDto() {
+        this.uuid = null;
+        this.name = null;
+        this.year = 0;
+    }
+
     @Nullable
     public UUID getUuid() {
         return uuid;

@@ -4,20 +4,10 @@ import rgo.wm.common.utils.rest.api.HttpResponse;
 import rgo.wm.common.utils.rest.api.status.HttpStatus;
 import rgo.wm.media.tracker.service.api.MediaDto;
 
-public class MediaSaveResponse implements HttpResponse {
-
-    private final MediaDto media;
-
-    public MediaSaveResponse(MediaDto media) {
-        this.media = media;
-    }
+public record MediaSaveResponse(MediaDto media) implements HttpResponse {
 
     @Override
-    public HttpStatus getStatus() {
+    public HttpStatus status() {
         return CREATED_STATUS;
-    }
-
-    public MediaDto getMedia() {
-        return media;
     }
 }

@@ -79,7 +79,7 @@ class PostgresMediaRepositoryTest {
         JdbcClient.StatementSpec statementSpec = mock(JdbcClient.StatementSpec.class);
         when(jdbc.sql(any())).thenReturn(statementSpec);
         when(statementSpec.paramSource(any())).thenReturn(statementSpec);
-        String uuid = randomString();
+        UUID uuid = UUID.randomUUID();
         doAnswer(invocation -> {
             KeyHolder keyHolder = invocation.getArgument(0);
             keyHolder.getKeyList().add(Map.of("uuid", uuid));
@@ -92,7 +92,7 @@ class PostgresMediaRepositoryTest {
         Media created = randomMedia();
         when(querySpec.single()).thenReturn(
                 Media.builder()
-                        .setUuid(UUID.fromString(uuid))
+                        .setUuid(uuid)
                         .setName(created.getName())
                         .setYear(created.getYear())
                         .build());
@@ -100,7 +100,7 @@ class PostgresMediaRepositoryTest {
         Media saved = repository.save(created);
 
         assertThat(saved.getUuid()).isNotNull();
-        assertThat(saved.getUuid().toString()).hasToString(uuid);
+        assertThat(saved.getUuid()).isEqualTo(uuid);
         assertThat(saved.getName()).hasToString(created.getName());
         assertThat(saved.getYear()).isEqualTo(created.getYear());
     }

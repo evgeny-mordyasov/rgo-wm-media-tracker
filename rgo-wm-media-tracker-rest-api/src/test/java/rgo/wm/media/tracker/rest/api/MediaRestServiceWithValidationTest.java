@@ -39,7 +39,7 @@ class MediaRestServiceWithValidationTest {
 
         InvalidRqHttpResponse response = (InvalidRqHttpResponse) restService.save(rq);
 
-        assertThat(response.getStatus()).isEqualTo(HttpResponse.INVALID_RQ_STATUS);
+        assertThat(response.status()).isEqualTo(HttpResponse.INVALID_RQ_STATUS);
         assertThat(response.errorDetails()).hasSize(1).contains(ErrorDetail.of("Name must not be null or empty."));
     }
 
@@ -51,7 +51,7 @@ class MediaRestServiceWithValidationTest {
 
         InvalidRqHttpResponse response = (InvalidRqHttpResponse) restService.save(rq);
 
-        assertThat(response.getStatus()).isEqualTo(HttpResponse.INVALID_RQ_STATUS);
+        assertThat(response.status()).isEqualTo(HttpResponse.INVALID_RQ_STATUS);
         assertThat(response.errorDetails()).hasSize(1).contains(ErrorDetail.of("Year must be greater than 1894."));
     }
 
@@ -65,9 +65,9 @@ class MediaRestServiceWithValidationTest {
 
         MediaSaveResponse response = (MediaSaveResponse) restService.save(rq);
 
-        assertThat(response.getStatus()).isEqualTo(HttpResponse.CREATED_STATUS);
-        assertThat(response.getMedia().getName()).isEqualTo(rq.getName());
-        assertThat(response.getMedia().getYear()).isEqualTo(rq.getYear());
+        assertThat(response.status()).isEqualTo(HttpResponse.CREATED_STATUS);
+        assertThat(response.media().getName()).isEqualTo(rq.getName());
+        assertThat(response.media().getYear()).isEqualTo(rq.getYear());
     }
 
     private static int randomYearGreaterThan1895() {

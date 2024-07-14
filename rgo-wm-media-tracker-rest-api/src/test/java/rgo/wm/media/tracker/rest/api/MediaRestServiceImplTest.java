@@ -31,8 +31,8 @@ class MediaRestServiceImplTest {
     @Test
     void findAll_empty() {
         MediaGetListResponse response = (MediaGetListResponse) restService.findAll();
-        assertThat(response.getStatus()).isEqualTo(HttpResponse.SUCCESSFUL_STATUS);
-        assertThat(response.getMedia()).isEmpty();
+        assertThat(response.status()).isEqualTo(HttpResponse.SUCCESSFUL_STATUS);
+        assertThat(response.media()).isEmpty();
     }
 
     @Test
@@ -42,9 +42,9 @@ class MediaRestServiceImplTest {
 
         MediaGetListResponse response = (MediaGetListResponse) restService.findAll();
 
-        assertThat(response.getStatus()).isEqualTo(HttpResponse.SUCCESSFUL_STATUS);
-        assertThat(response.getMedia()).isNotEmpty();
-        assertThat(response.getMedia()).contains(media);
+        assertThat(response.status()).isEqualTo(HttpResponse.SUCCESSFUL_STATUS);
+        assertThat(response.media()).isNotEmpty();
+        assertThat(response.media()).contains(media);
     }
 
     @Test
@@ -55,8 +55,8 @@ class MediaRestServiceImplTest {
 
         MediaSaveResponse response = (MediaSaveResponse) restService.save(rq);
 
-        assertThat(response.getStatus()).isEqualTo(HttpResponse.CREATED_STATUS);
-        assertThat(response.getMedia()).isEqualTo(media);
+        assertThat(response.status()).isEqualTo(HttpResponse.CREATED_STATUS);
+        assertThat(response.media()).isEqualTo(media);
     }
 
     private static MediaDto randomMedia() {
