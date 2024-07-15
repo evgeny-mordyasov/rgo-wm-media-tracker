@@ -4,16 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import rgo.wm.common.utils.rest.api.HttpResponse;
-import rgo.wm.common.utils.rest.api.InvalidRqHttpResponse;
 import rgo.wm.media.tracker.rest.api.request.MediaSaveRequest;
-import rgo.wm.media.tracker.rest.api.response.MediaGetListResponse;
-import rgo.wm.media.tracker.rest.api.response.MediaSaveResponse;
 import rgo.wm.media.tracker.service.api.MediaDto;
 import rgo.wm.media.tracker.service.api.MediaService;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static rgo.wm.common.test.utils.random.ShortRandom.randomPositiveShort;
 import static rgo.wm.common.test.utils.random.StringRandom.randomString;
 
@@ -28,23 +24,30 @@ class MediaRestControllerTest extends AbstractTest {
 
     @Test
     void findAll_empty() {
-        MediaGetListResponse response = REST.getForObject(url(), MediaGetListResponse.class);
-
-        assertThat(response).isNotNull();
-        assertThat(response.status()).isEqualTo(HttpResponse.SUCCESSFUL_STATUS);
-        assertThat(response.media()).isEmpty();
+        CLIENT.get()
+                .uri(url())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("status.code").isEqualTo(HttpResponse.SUCCESSFUL_STATUS.code())
+                .jsonPath("media").isEmpty();
     }
 
     @Test
     void findAll() {
         MediaDto saved = service.save(randomMediaDto());
+        assert saved.getUuid() != null;
 
-        MediaGetListResponse response = REST.getForObject(url(), MediaGetListResponse.class);
-
-        assertThat(response).isNotNull();
-        assertThat(response.status()).isEqualTo(HttpResponse.SUCCESSFUL_STATUS);
-        assertThat(response.media()).isNotEmpty();
-        assertThat(response.media()).contains(saved);
+        CLIENT.get()
+                .uri(url())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("status.code").isEqualTo(HttpResponse.SUCCESSFUL_STATUS.code())
+                .jsonPath("media").isNotEmpty()
+                .jsonPath("media[0].uuid").isEqualTo(saved.getUuid().toString())
+                .jsonPath("media[0].name").isEqualTo(saved.getName())
+                .jsonPath("media[0].year").isEqualTo(saved.getYear());
     }
 
     @Test
@@ -53,9 +56,15 @@ class MediaRestControllerTest extends AbstractTest {
         rq.setName(null);
         rq.setYear(randomPositiveShort());
 
-        InvalidRqHttpResponse response = REST.postForObject(url(), rq, InvalidRqHttpResponse.class);
-        assertThat(response).isNotNull();
-        assertThat(response.status()).isEqualTo(HttpResponse.INVALID_RQ_STATUS);
+        CLIENT.post()
+                .uri(url())
+                .bodyValue(rq)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("status.code").isEqualTo(HttpResponse.INVALID_RQ_STATUS.code())
+                .jsonPath("errorDetails").isNotEmpty()
+                .jsonPath("errorDetails[0].message").isEqualTo("Name must not be null or empty.");
     }
 
     @Test
@@ -64,9 +73,15 @@ class MediaRestControllerTest extends AbstractTest {
         rq.setName("");
         rq.setYear(randomPositiveShort());
 
-        InvalidRqHttpResponse response = REST.postForObject(url(), rq, InvalidRqHttpResponse.class);
-        assertThat(response).isNotNull();
-        assertThat(response.status()).isEqualTo(HttpResponse.INVALID_RQ_STATUS);
+        CLIENT.post()
+                .uri(url())
+                .bodyValue(rq)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("status.code").isEqualTo(HttpResponse.INVALID_RQ_STATUS.code())
+                .jsonPath("errorDetails").isNotEmpty()
+                .jsonPath("errorDetails[0].message").isEqualTo("Name must not be null or empty.");
     }
 
     @Test
@@ -75,9 +90,15 @@ class MediaRestControllerTest extends AbstractTest {
         rq.setName(randomString());
         rq.setYear(1894);
 
-        InvalidRqHttpResponse response = REST.postForObject(url(), rq, InvalidRqHttpResponse.class);
-        assertThat(response).isNotNull();
-        assertThat(response.status()).isEqualTo(HttpResponse.INVALID_RQ_STATUS);
+        CLIENT.post()
+                .uri(url())
+                .bodyValue(rq)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("status.code").isEqualTo(HttpResponse.INVALID_RQ_STATUS.code())
+                .jsonPath("errorDetails").isNotEmpty()
+                .jsonPath("errorDetails[0].message").isEqualTo("Year must be greater than 1894.");
     }
 
     @Test
@@ -86,11 +107,16 @@ class MediaRestControllerTest extends AbstractTest {
         rq.setName(randomString());
         rq.setYear(randomYear());
 
-        MediaSaveResponse response = REST.postForObject(url(), rq, MediaSaveResponse.class);
-        assertThat(response).isNotNull();
-        assertThat(response.status()).isEqualTo(HttpResponse.CREATED_STATUS);
-        assertThat(response.media().getName()).isEqualTo(rq.getName());
-        assertThat(response.media().getYear()).isEqualTo(rq.getYear());
+        CLIENT.post()
+                .uri(url())
+                .bodyValue(rq)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody()
+                .jsonPath("status.code").isEqualTo(HttpResponse.CREATED_STATUS.code())
+                .jsonPath("media.uuid").isNotEmpty()
+                .jsonPath("media.name").isEqualTo(rq.getName())
+                .jsonPath("media.year").isEqualTo(rq.getYear());
     }
 
     private String url() {

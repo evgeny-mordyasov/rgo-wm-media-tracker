@@ -2,6 +2,7 @@ package rgo.wm.media.tracker.boot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,13 +34,19 @@ public class RestConfiguration {
         }
 
         @GetMapping
-        public HttpResponse findAll() {
-            return service.findAll();
+        public ResponseEntity<HttpResponse> findAll() {
+            HttpResponse response = service.findAll();
+            return ResponseEntity
+                    .status(response.status().httpCode())
+                    .body(response);
         }
 
         @PostMapping
-        public HttpResponse save(@RequestBody MediaSaveRequest rq) {
-            return service.save(rq);
+        public ResponseEntity<HttpResponse> save(@RequestBody MediaSaveRequest rq) {
+            HttpResponse response = service.save(rq);
+            return ResponseEntity
+                    .status(response.status().httpCode())
+                    .body(response);
         }
     }
 }

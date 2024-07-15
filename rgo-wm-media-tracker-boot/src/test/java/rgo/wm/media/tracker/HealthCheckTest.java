@@ -3,8 +3,6 @@ package rgo.wm.media.tracker;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.actuate.health.Status;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class HealthCheckTest extends AbstractTest {
 
     @Test
@@ -28,12 +26,11 @@ class HealthCheckTest extends AbstractTest {
     }
 
     private void checkUp(String url) {
-        StatusV2 status = REST.getForObject(BASE_URL + port + url, StatusV2.class);
-        assertThat(status).isNotNull();
-        assertThat(status.status()).isEqualTo(Status.UP.getCode());
-    }
-
-    private record StatusV2(String status) {
+        CLIENT.get()
+                .uri(baseUrl() + url)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody().jsonPath("status").isEqualTo(Status.UP.getCode());
     }
 }
 

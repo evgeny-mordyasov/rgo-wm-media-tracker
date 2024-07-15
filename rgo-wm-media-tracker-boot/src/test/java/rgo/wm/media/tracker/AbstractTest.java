@@ -6,7 +6,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import rgo.wm.media.tracker.tests.Containers;
 
 @ActiveProfiles("test")
@@ -15,7 +15,7 @@ import rgo.wm.media.tracker.tests.Containers;
 abstract class AbstractTest {
 
     protected static final String BASE_URL = "http://localhost:";
-    protected static final RestTemplate REST = new RestTemplate();
+    protected static final WebTestClient CLIENT = WebTestClient.bindToServer().build();
 
     @LocalServerPort
     protected int port;
