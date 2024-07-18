@@ -23,15 +23,15 @@ import static rgo.wm.common.test.utils.random.IntRandom.randomPositiveInt;
 import static rgo.wm.common.test.utils.random.StringRandom.randomString;
 
 @SuppressWarnings("unchecked")
-class PostgresMediaRepositoryTest {
+class JdbcMediaRepositoryTest {
 
-    private PostgresMediaRepository repository;
+    private JdbcMediaRepository repository;
     private JdbcClient jdbc;
 
     @BeforeEach
     void setUp() {
         jdbc = mock(JdbcClient.class);
-        repository = new PostgresMediaRepository(jdbc);
+        repository = new JdbcMediaRepository(jdbc);
     }
 
     @Test

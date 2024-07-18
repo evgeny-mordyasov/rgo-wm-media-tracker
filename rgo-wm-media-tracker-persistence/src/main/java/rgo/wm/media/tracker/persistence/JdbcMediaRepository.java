@@ -14,11 +14,11 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.UUID;
 
-public class PostgresMediaRepository implements MediaRepository {
+public class JdbcMediaRepository implements MediaRepository {
 
     private final JdbcClient jdbc;
 
-    public PostgresMediaRepository(JdbcClient jdbc) {
+    public JdbcMediaRepository(JdbcClient jdbc) {
         this.jdbc = jdbc;
     }
 
