@@ -1,7 +1,3 @@
-CREATE TABLESPACE ${tbsTables}
+CREATE TABLESPACE ${tbs}
             OWNER postgres
-         LOCATION '${tbsTablesDataFile}';
-
-CREATE TABLESPACE ${tbsIndexes}
-            OWNER postgres
-         LOCATION '${tbsIndexesDataFile}';
+         LOCATION '${tbsDataFile}';

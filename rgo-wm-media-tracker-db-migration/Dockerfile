@@ -1,8 +1,6 @@
 FROM postgres:15-alpine
 
 RUN mkdir -p /usr/local/media/pgdata; \
-    mkdir -p /usr/local/media/pgindex; \
-
     chown -R postgres:postgres /usr/local; \
     chmod -R u+rwx /usr/local;
 
