@@ -14,9 +14,20 @@ import rgo.wm.media.tracker.rest.api.MediaRestService;
 import rgo.wm.media.tracker.rest.api.MediaRestServiceImpl;
 import rgo.wm.media.tracker.rest.api.request.MediaSaveRequest;
 import rgo.wm.media.tracker.service.api.MediaService;
+import rgo.wm.spring.web.InfoRequestLoggingFilter;
 
 @Configuration
 public class RestConfiguration {
+
+    @Bean
+    public InfoRequestLoggingFilter logFilter() {
+        InfoRequestLoggingFilter filter = new InfoRequestLoggingFilter();
+        filter.setIncludeQueryString(true);
+        filter.setIncludePayload(true);
+        filter.setMaxPayloadLength(1000);
+        filter.setIncludeHeaders(true);
+        return filter;
+    }
 
     @Bean
     public MediaRestService restService(MediaService service, ValidatorAdapter validator) {

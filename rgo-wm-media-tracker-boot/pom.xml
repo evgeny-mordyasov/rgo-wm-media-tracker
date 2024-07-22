@@ -30,6 +30,10 @@
         </dependency>
         <dependency>
             <groupId>ru.gold.ordance</groupId>
+            <artifactId>rgo-wm-spring-autoconfig-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ru.gold.ordance</groupId>
             <artifactId>rgo-wm-common-test-utils-random</artifactId>
         </dependency>
         <!-- /rgo-wm modules -->
