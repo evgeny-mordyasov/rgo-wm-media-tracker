@@ -1,4 +1,4 @@
-package rgo.wm.media.tracker.tests;
+package rgo.wm.media.tracker.it;
 
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;

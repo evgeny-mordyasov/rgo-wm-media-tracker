@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import rgo.wm.media.tracker.tests.Containers;
+import rgo.wm.media.tracker.it.Containers;
 
 @ActiveProfiles("test")
 @Import(Containers.class)

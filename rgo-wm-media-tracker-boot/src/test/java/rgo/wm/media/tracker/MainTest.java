@@ -1,7 +1,7 @@
 package rgo.wm.media.tracker;
 
 import org.springframework.boot.SpringApplication;
-import rgo.wm.media.tracker.tests.Containers;
+import rgo.wm.media.tracker.it.Containers;
 
 class MainTest {
 
