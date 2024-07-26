@@ -7,6 +7,8 @@ import rgo.wm.media.tracker.service.api.MediaService;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class MediaServiceImpl implements MediaService {
 
@@ -21,6 +23,11 @@ public class MediaServiceImpl implements MediaService {
     public List<MediaDto> findAll() {
         List<Media> media = repository.findAll();
         return convert(media);
+    }
+
+    @Override
+    public Optional<MediaDto> findByUuid(UUID uuid) {
+        return repository.findByUuid(uuid).map(this::convert);
     }
 
     private List<MediaDto> convert(List<Media> media) {

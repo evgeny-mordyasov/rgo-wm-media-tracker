@@ -6,6 +6,8 @@ import rgo.wm.spring.jdbc.TxWrapper;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class TxMediaRepositoryDecorator implements MediaRepository  {
 
@@ -21,6 +23,11 @@ public class TxMediaRepositoryDecorator implements MediaRepository  {
     @Override
     public List<Media> findAll() {
         return txWrapper.tx(delegate::findAll);
+    }
+
+    @Override
+    public Optional<Media> findByUuid(UUID uuid) {
+        return txWrapper.tx(() -> delegate.findByUuid(uuid));
     }
 
     @Nonnull

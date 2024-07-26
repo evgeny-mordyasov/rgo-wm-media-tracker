@@ -8,6 +8,7 @@ import rgo.wm.media.tracker.service.api.MediaDto;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,6 +47,29 @@ class MediaServiceImplTest {
         assertThat(result.get(0).getUuid()).isEqualTo(media.getUuid());
         assertThat(result.get(0).getName()).isEqualTo(media.getName());
         assertThat(result.get(0).getYear()).isEqualTo(media.getYear());
+    }
+
+    @Test
+    void findByUuid_empty() {
+        UUID uuid = UUID.randomUUID();
+        when(repository.findByUuid(uuid)).thenReturn(Optional.empty());
+
+        Optional<MediaDto> opt = service.findByUuid(uuid);
+
+        assertThat(opt).isEmpty();
+    }
+
+    @Test
+    void findByUuid() {
+        Media media = randomPersistentMedia();
+        when(repository.findByUuid(media.getUuid())).thenReturn(Optional.of(media));
+
+        Optional<MediaDto> opt = service.findByUuid(media.getUuid());
+
+        assertThat(opt).isPresent();
+        assertThat(opt.get().getUuid()).isEqualTo(media.getUuid());
+        assertThat(opt.get().getName()).isEqualTo(media.getName());
+        assertThat(opt.get().getYear()).isEqualTo(media.getYear());
     }
 
     @Test

@@ -6,6 +6,7 @@ import rgo.wm.media.tracker.persistence.api.Media;
 import rgo.wm.media.tracker.persistence.api.MediaRepository;
 import rgo.wm.spring.jdbc.TxWrapper;
 
+import java.util.UUID;
 import java.util.function.Supplier;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -39,6 +40,20 @@ class TxMediaRepositoryDecoratorTest {
         decorator.findAll();
 
         verify(delegate).findAll();
+        verify(txWrapper).tx(any(Supplier.class));
+    }
+
+    @Test
+    void findByUuid() {
+        UUID uuid = UUID.randomUUID();
+        doAnswer(invocation -> {
+            delegate.findByUuid(uuid);
+            return null;
+        }).when(txWrapper).tx(any(Supplier.class));
+
+        decorator.save(any());
+
+        verify(delegate).findByUuid(uuid);
         verify(txWrapper).tx(any(Supplier.class));
     }
 

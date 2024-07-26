@@ -6,6 +6,7 @@ import rgo.wm.common.utils.rest.api.ErrorDetail;
 import rgo.wm.common.utils.rest.api.HttpResponse;
 import rgo.wm.common.utils.rest.api.InvalidRqHttpResponse;
 import rgo.wm.common.utils.validator.ValidatorAdapter;
+import rgo.wm.media.tracker.rest.api.request.MediaGetByUuidRequest;
 import rgo.wm.media.tracker.rest.api.request.MediaSaveRequest;
 import rgo.wm.media.tracker.rest.api.response.MediaSaveResponse;
 import rgo.wm.media.tracker.service.api.MediaDto;
@@ -32,6 +33,19 @@ class MediaRestServiceWithValidationTest {
     }
 
     @Test
+    void findByUuid_uuidIsInvalid() {
+        var rq = new MediaGetByUuidRequest();
+        rq.setUuid("abc");
+
+        InvalidRqHttpResponse response = (InvalidRqHttpResponse) restService.findByUuid(rq);
+
+        assertThat(response.status()).isEqualTo(HttpResponse.INVALID_RQ_STATUS);
+        assertThat(response.errorDetails())
+                .hasSize(1)
+                .contains(ErrorDetail.of("UUID not a valid."));
+    }
+
+    @Test
     void save_nameIsNull() {
         var rq = new MediaSaveRequest();
         rq.setName(null);
@@ -40,7 +54,9 @@ class MediaRestServiceWithValidationTest {
         InvalidRqHttpResponse response = (InvalidRqHttpResponse) restService.save(rq);
 
         assertThat(response.status()).isEqualTo(HttpResponse.INVALID_RQ_STATUS);
-        assertThat(response.errorDetails()).hasSize(1).contains(ErrorDetail.of("Name must not be null or empty."));
+        assertThat(response.errorDetails())
+                .hasSize(1)
+                .contains(ErrorDetail.of("Name must not be null or empty."));
     }
 
     @Test
@@ -52,7 +68,24 @@ class MediaRestServiceWithValidationTest {
         InvalidRqHttpResponse response = (InvalidRqHttpResponse) restService.save(rq);
 
         assertThat(response.status()).isEqualTo(HttpResponse.INVALID_RQ_STATUS);
-        assertThat(response.errorDetails()).hasSize(1).contains(ErrorDetail.of("Year must be greater than 1894."));
+        assertThat(response.errorDetails())
+                .hasSize(1)
+                .contains(ErrorDetail.of("Year must be greater than 1894."));
+    }
+
+    @Test
+    void save_nameIsNullAndYearLessThan1895() {
+        var rq = new MediaSaveRequest();
+        rq.setName(null);
+        rq.setYear(randomYearLessThan1895());
+
+        InvalidRqHttpResponse response = (InvalidRqHttpResponse) restService.save(rq);
+
+        assertThat(response.status()).isEqualTo(HttpResponse.INVALID_RQ_STATUS);
+        assertThat(response.errorDetails())
+                .hasSize(2)
+                .contains(ErrorDetail.of("Name must not be null or empty."))
+                .contains(ErrorDetail.of("Year must be greater than 1894."));
     }
 
     @Test

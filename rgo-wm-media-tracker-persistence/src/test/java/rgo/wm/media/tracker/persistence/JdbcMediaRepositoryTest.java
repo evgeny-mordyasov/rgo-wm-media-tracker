@@ -10,6 +10,7 @@ import rgo.wm.media.tracker.persistence.api.Media;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -62,6 +63,39 @@ class JdbcMediaRepositoryTest {
     }
 
     @Test
+    void findByUuid_empty() {
+        JdbcClient.StatementSpec statementSpec = mock(JdbcClient.StatementSpec.class);
+        when(jdbc.sql(any())).thenReturn(statementSpec);
+        when(statementSpec.param(eq("uuid"), any())).thenReturn(statementSpec);
+        JdbcClient.MappedQuerySpec<?> querySpec = mock(JdbcClient.MappedQuerySpec.class);
+        when(statementSpec.query(any(RowMapper.class))).thenReturn(querySpec);
+        when(querySpec.optional()).thenReturn(Optional.empty());
+        UUID uuid = UUID.randomUUID();
+
+        Optional<Media> optional = repository.findByUuid(uuid);
+
+        assertThat(optional).isEmpty();
+    }
+
+    @Test
+    @SuppressWarnings("rawtypes")
+    void findByUuid() {
+        JdbcClient.StatementSpec statementSpec = mock(JdbcClient.StatementSpec.class);
+        when(jdbc.sql(any())).thenReturn(statementSpec);
+        when(statementSpec.param(eq("uuid"), any())).thenReturn(statementSpec);
+        JdbcClient.MappedQuerySpec<?> querySpec = mock(JdbcClient.MappedQuerySpec.class);
+        when(statementSpec.query(any(RowMapper.class))).thenReturn(querySpec);
+        Media media = randomPersistentMedia();
+        when(querySpec.optional()).thenReturn((Optional) Optional.of(media));
+
+        Optional<Media> optional = repository.findByUuid(media.getUuid());
+
+        assertThat(optional)
+                .isPresent()
+                .contains(media);
+    }
+
+    @Test
     void save_keyRetrievalException() {
         JdbcClient.StatementSpec statementSpec = mock(JdbcClient.StatementSpec.class);
         when(jdbc.sql(any())).thenReturn(statementSpec);
@@ -107,6 +141,14 @@ class JdbcMediaRepositoryTest {
 
     private Media randomMedia() {
         return Media.builder()
+                .setName(randomString())
+                .setYear(randomPositiveInt())
+                .build();
+    }
+
+    private Media randomPersistentMedia() {
+        return Media.builder()
+                .setUuid(UUID.randomUUID())
                 .setName(randomString())
                 .setYear(randomPositiveInt())
                 .build();

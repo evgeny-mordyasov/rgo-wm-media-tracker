@@ -12,6 +12,7 @@ import rgo.wm.media.tracker.persistence.api.MediaRepository;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class JdbcMediaRepository implements MediaRepository {
@@ -30,11 +31,12 @@ public class JdbcMediaRepository implements MediaRepository {
                 .list();
     }
 
-    private Media findByUuid(UUID uuid) {
+    @Override
+    public Optional<Media> findByUuid(UUID uuid) {
         return jdbc.sql(MediaQueries.findByUuid())
                 .param("uuid", uuid)
                 .query(MEDIA_MAPPER)
-                .single();
+                .optional();
     }
 
     @Nonnull
@@ -51,7 +53,14 @@ public class JdbcMediaRepository implements MediaRepository {
             throw new KeyRetrievalException("Failed to retrieve uuid after saving media.");
         }
 
-        return findByUuid(uuid);
+        return getByUuid(uuid);
+    }
+
+    private Media getByUuid(UUID uuid) {
+        return jdbc.sql(MediaQueries.findByUuid())
+                .param("uuid", uuid)
+                .query(MEDIA_MAPPER)
+                .single();
     }
 
     private static final RowMapper<Media> MEDIA_MAPPER = (rs, rowNum) -> Media.builder()
