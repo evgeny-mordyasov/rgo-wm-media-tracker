@@ -73,15 +73,15 @@ public class JdbcMediaRepository implements MediaRepository {
 
         private static final String TABLE_NAME = "media";
 
-        public static String findAll() {
+        static String findAll() {
             return select();
         }
 
-        public static String findByUuid() {
+        static String findByUuid() {
             return select() + " WHERE uuid = :uuid";
         }
 
-        public static String save() {
+        static String save() {
             return """
                     INSERT INTO %s(name, year)
                     VALUES(:name, :year)
