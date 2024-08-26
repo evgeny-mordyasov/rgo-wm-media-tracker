@@ -1,12 +1,12 @@
 package rgo.wm.media.tracker.it;
 
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 public class Containers {
 
     @Bean
