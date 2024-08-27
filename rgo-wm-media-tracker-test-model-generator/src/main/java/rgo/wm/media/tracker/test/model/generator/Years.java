@@ -1,7 +1,8 @@
 package rgo.wm.media.tracker.test.model.generator;
 
 import java.time.Year;
-import java.util.concurrent.ThreadLocalRandom;
+
+import static rgo.wm.common.test.utils.random.ShortRandom.randomShortInclusive;
 
 public final class Years {
 
@@ -9,13 +10,10 @@ public final class Years {
     }
 
     public static short randomMediaYear() {
-        return (short) ThreadLocalRandom.current()
-                .nextInt(
-                        1895,
-                        Year.now().getValue() + 1);
+        return randomShortInclusive(1895, Year.now().getValue());
     }
 
     public static short randomMediaYearLessThan1895() {
-        return (short) ThreadLocalRandom.current().nextInt(1, 1895);
+        return randomShortInclusive(1, 1895);
     }
 }
