@@ -24,15 +24,15 @@ import static rgo.wm.media.tracker.test.model.generator.rest.MediaRqData.randomS
 import static rgo.wm.media.tracker.test.model.generator.service.MediaDtoData.randomMediaDtoFrom;
 import static rgo.wm.media.tracker.test.model.generator.service.MediaDtoData.randomPersistentMediaDto;
 
-class MediaRestServiceImplTest {
+class InternalMediaRestServiceTest {
 
-    private MediaRestServiceImpl restService;
+    private InternalMediaRestService restService;
     private MediaService service;
 
     @BeforeEach
     void setUp() {
         service = mock(MediaService.class);
-        restService = new MediaRestServiceImpl(service);
+        restService = new InternalMediaRestService(service);
     }
 
     @Test

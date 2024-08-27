@@ -13,11 +13,11 @@ import rgo.wm.media.tracker.service.api.MediaService;
 import java.util.List;
 import java.util.Optional;
 
-public class MediaRestServiceImpl implements MediaRestService {
+public class InternalMediaRestService implements MediaRestService {
 
     private final MediaService service;
 
-    public MediaRestServiceImpl(MediaService service) {
+    public InternalMediaRestService(MediaService service) {
         this.service = service;
     }
 

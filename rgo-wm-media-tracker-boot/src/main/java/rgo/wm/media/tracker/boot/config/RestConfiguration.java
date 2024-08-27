@@ -3,12 +3,17 @@ package rgo.wm.media.tracker.boot.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import rgo.wm.common.utils.rest.api.HttpResponse;
 import rgo.wm.common.utils.validator.ValidatorAdapter;
 import rgo.wm.media.tracker.rest.ValidationMediaRestServiceDecorator;
 import rgo.wm.media.tracker.rest.api.MediaRestService;
-import rgo.wm.media.tracker.rest.MediaRestServiceImpl;
+import rgo.wm.media.tracker.rest.InternalMediaRestService;
 import rgo.wm.media.tracker.rest.api.request.MediaGetByUuidRequest;
 import rgo.wm.media.tracker.rest.api.request.MediaSaveRequest;
 import rgo.wm.media.tracker.service.api.MediaService;
@@ -28,10 +33,10 @@ public class RestConfiguration {
     }
 
     @Bean
-    public MediaRestService restService(MediaService service, ValidatorAdapter validator) {
+    public MediaRestService mediaRestService(MediaService mediaService, ValidatorAdapter validator) {
         return new ValidationMediaRestServiceDecorator(
                 validator,
-                new MediaRestServiceImpl(service));
+                new InternalMediaRestService(mediaService));
     }
 
     @RestController
