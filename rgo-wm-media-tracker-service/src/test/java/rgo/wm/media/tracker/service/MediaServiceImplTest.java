@@ -15,8 +15,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static rgo.wm.common.test.utils.random.IntRandom.randomPositiveInt;
-import static rgo.wm.common.test.utils.random.StringRandom.randomString;
+import static rgo.wm.media.tracker.test.model.generator.persistence.MediaData.randomPersistentMedia;
+import static rgo.wm.media.tracker.test.model.generator.persistence.MediaData.randomPersistentMediaFrom;
+import static rgo.wm.media.tracker.test.model.generator.service.MediaDtoData.randomMediaDto;
 
 class MediaServiceImplTest {
 
@@ -75,7 +76,7 @@ class MediaServiceImplTest {
     @Test
     void save() {
         MediaDto created = randomMediaDto();
-        Media stored = randomPersistentMedia(created);
+        Media stored = randomPersistentMediaFrom(created);
         when(repository.save(any())).thenReturn(stored);
 
         MediaDto storedDto = service.save(created);
@@ -83,28 +84,5 @@ class MediaServiceImplTest {
         assertThat(storedDto.getUuid()).isEqualTo(stored.getUuid());
         assertThat(storedDto.getName()).isEqualTo(stored.getName());
         assertThat(storedDto.getYear()).isEqualTo(stored.getYear());
-    }
-
-    private Media randomPersistentMedia() {
-        return Media.builder()
-                .setUuid(UUID.randomUUID())
-                .setName(randomString())
-                .setYear(randomPositiveInt())
-                .build();
-    }
-
-    private Media randomPersistentMedia(MediaDto dto) {
-        return Media.builder()
-                .setUuid(UUID.randomUUID())
-                .setName(dto.getName())
-                .setYear(dto.getYear())
-                .build();
-    }
-
-    private MediaDto randomMediaDto() {
-        return MediaDto.builder()
-                .setName(randomString())
-                .setYear(randomPositiveInt())
-                .build();
     }
 }

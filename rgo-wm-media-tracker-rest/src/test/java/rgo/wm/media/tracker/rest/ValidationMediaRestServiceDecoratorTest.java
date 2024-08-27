@@ -1,4 +1,4 @@
-package rgo.wm.media.tracker.rest.api;
+package rgo.wm.media.tracker.rest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,20 +6,20 @@ import rgo.wm.common.utils.rest.api.ErrorDetail;
 import rgo.wm.common.utils.rest.api.HttpResponse;
 import rgo.wm.common.utils.rest.api.InvalidRqHttpResponse;
 import rgo.wm.common.utils.validator.ValidatorAdapter;
+import rgo.wm.media.tracker.rest.api.MediaRestService;
 import rgo.wm.media.tracker.rest.api.request.MediaGetByUuidRequest;
 import rgo.wm.media.tracker.rest.api.request.MediaSaveRequest;
 import rgo.wm.media.tracker.rest.api.response.MediaSaveResponse;
-import rgo.wm.media.tracker.service.api.MediaDto;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
-import static rgo.wm.common.test.utils.random.StringRandom.randomString;
 import static rgo.wm.common.utils.validator.Validators.createValidator;
+import static rgo.wm.media.tracker.test.model.generator.Years.randomMediaYearLessThan1895;
+import static rgo.wm.media.tracker.test.model.generator.rest.MediaRqData.randomSaveRequest;
+import static rgo.wm.media.tracker.test.model.generator.service.MediaDtoData.randomMediaDtoFrom;
 
-class MediaRestServiceWithValidationTest {
+class ValidationMediaRestServiceDecoratorTest {
 
     private static final ValidatorAdapter VALIDATOR = createValidator();
 
@@ -29,7 +29,7 @@ class MediaRestServiceWithValidationTest {
     @BeforeEach
     void setUp() {
         delegate = spy(MediaRestService.class);
-        restService = delegate.withValidation(VALIDATOR);
+        restService = new ValidationMediaRestServiceDecorator(VALIDATOR, delegate);
     }
 
     @Test
@@ -47,9 +47,8 @@ class MediaRestServiceWithValidationTest {
 
     @Test
     void save_nameIsNull() {
-        var rq = new MediaSaveRequest();
+        var rq = randomSaveRequest();
         rq.setName(null);
-        rq.setYear(randomYearGreaterThan1895());
 
         InvalidRqHttpResponse response = (InvalidRqHttpResponse) restService.save(rq);
 
@@ -61,9 +60,8 @@ class MediaRestServiceWithValidationTest {
 
     @Test
     void save_yearLessThan1895() {
-        var rq = new MediaSaveRequest();
-        rq.setName(randomString());
-        rq.setYear(randomYearLessThan1895());
+        var rq = randomSaveRequest();
+        rq.setYear(randomMediaYearLessThan1895());
 
         InvalidRqHttpResponse response = (InvalidRqHttpResponse) restService.save(rq);
 
@@ -77,7 +75,7 @@ class MediaRestServiceWithValidationTest {
     void save_nameIsNullAndYearLessThan1895() {
         var rq = new MediaSaveRequest();
         rq.setName(null);
-        rq.setYear(randomYearLessThan1895());
+        rq.setYear(randomMediaYearLessThan1895());
 
         InvalidRqHttpResponse response = (InvalidRqHttpResponse) restService.save(rq);
 
@@ -90,24 +88,13 @@ class MediaRestServiceWithValidationTest {
 
     @Test
     void save_success() {
-        var rq = new MediaSaveRequest();
-        rq.setName(randomString());
-        rq.setYear(randomYearGreaterThan1895());
-        when(delegate.save(rq))
-                .thenReturn(new MediaSaveResponse(MediaDto.builder().setName(rq.getName()).setYear(rq.getYear()).build()));
+        var rq = randomSaveRequest();
+        when(delegate.save(rq)).thenReturn(new MediaSaveResponse(randomMediaDtoFrom(rq)));
 
         MediaSaveResponse response = (MediaSaveResponse) restService.save(rq);
 
         assertThat(response.status()).isEqualTo(HttpResponse.CREATED_STATUS);
         assertThat(response.media().getName()).isEqualTo(rq.getName());
         assertThat(response.media().getYear()).isEqualTo(rq.getYear());
-    }
-
-    private static int randomYearGreaterThan1895() {
-        return ThreadLocalRandom.current().nextInt(1895, Integer.MAX_VALUE);
-    }
-
-    private static int randomYearLessThan1895() {
-        return ThreadLocalRandom.current().nextInt(1, 1895);
     }
 }

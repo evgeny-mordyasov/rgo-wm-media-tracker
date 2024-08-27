@@ -20,8 +20,8 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static rgo.wm.common.test.utils.random.IntRandom.randomPositiveInt;
-import static rgo.wm.common.test.utils.random.StringRandom.randomString;
+import static rgo.wm.media.tracker.test.model.generator.persistence.MediaData.randomMedia;
+import static rgo.wm.media.tracker.test.model.generator.persistence.MediaData.randomPersistentMedia;
 
 @SuppressWarnings("unchecked")
 class JdbcMediaRepositoryTest {
@@ -137,20 +137,5 @@ class JdbcMediaRepositoryTest {
         assertThat(saved.getUuid()).isEqualTo(uuid);
         assertThat(saved.getName()).hasToString(created.getName());
         assertThat(saved.getYear()).isEqualTo(created.getYear());
-    }
-
-    private Media randomMedia() {
-        return Media.builder()
-                .setName(randomString())
-                .setYear(randomPositiveInt())
-                .build();
-    }
-
-    private Media randomPersistentMedia() {
-        return Media.builder()
-                .setUuid(UUID.randomUUID())
-                .setName(randomString())
-                .setYear(randomPositiveInt())
-                .build();
     }
 }

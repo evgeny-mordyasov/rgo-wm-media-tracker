@@ -1,4 +1,4 @@
-package rgo.wm.media.tracker.rest.api;
+package rgo.wm.media.tracker.rest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,13 +14,15 @@ import rgo.wm.media.tracker.service.api.MediaService;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static rgo.wm.common.test.utils.random.StringRandom.randomString;
+import static rgo.wm.media.tracker.test.model.generator.rest.MediaRqData.randomGetByUuidRequest;
+import static rgo.wm.media.tracker.test.model.generator.rest.MediaRqData.randomSaveRequest;
+import static rgo.wm.media.tracker.test.model.generator.service.MediaDtoData.randomMediaDtoFrom;
+import static rgo.wm.media.tracker.test.model.generator.service.MediaDtoData.randomPersistentMediaDto;
 
 class MediaRestServiceImplTest {
 
@@ -42,7 +44,7 @@ class MediaRestServiceImplTest {
 
     @Test
     void findAll() {
-        MediaDto media = randomMedia();
+        MediaDto media = randomPersistentMediaDto();
         when(service.findAll()).thenReturn(List.of(media));
 
         MediaGetListResponse response = (MediaGetListResponse) restService.findAll();
@@ -64,7 +66,7 @@ class MediaRestServiceImplTest {
 
     @Test
     void findByUuid() {
-        MediaDto media = randomMedia();
+        MediaDto media = randomPersistentMediaDto();
         assert media.getUuid() != null;
         MediaGetByUuidRequest rq = MediaGetByUuidRequest.of(media.getUuid().toString());
         when(service.findByUuid(rq.getUuid())).thenReturn(Optional.of(media));
@@ -78,35 +80,12 @@ class MediaRestServiceImplTest {
     @Test
     void save() {
         MediaSaveRequest rq = randomSaveRequest();
-        MediaDto media = MediaDto.builder().setName(rq.getName()).setYear(rq.getYear()).build();
-        when(service.save(media)).thenReturn(media);
+        MediaDto media = randomMediaDtoFrom(rq);
+        when(service.save(any())).thenReturn(media);
 
         MediaSaveResponse response = (MediaSaveResponse) restService.save(rq);
 
         assertThat(response.status()).isEqualTo(HttpResponse.CREATED_STATUS);
         assertThat(response.media()).isEqualTo(media);
-    }
-
-    private static MediaDto randomMedia() {
-        return MediaDto.builder()
-                .setUuid(UUID.randomUUID())
-                .setName(randomString())
-                .setYear(randomYear())
-                .build();
-    }
-
-    private static MediaGetByUuidRequest randomGetByUuidRequest() {
-        return MediaGetByUuidRequest.of(randomString());
-    }
-
-    private static MediaSaveRequest randomSaveRequest() {
-        var rq = new MediaSaveRequest();
-        rq.setName(randomString());
-        rq.setYear(randomYear());
-        return rq;
-    }
-
-    private static int randomYear() {
-        return ThreadLocalRandom.current().nextInt(1895, Integer.MAX_VALUE);
     }
 }

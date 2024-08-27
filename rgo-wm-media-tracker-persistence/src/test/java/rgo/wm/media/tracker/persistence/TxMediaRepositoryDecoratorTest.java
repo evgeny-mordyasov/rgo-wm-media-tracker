@@ -9,12 +9,12 @@ import rgo.wm.spring.jdbc.TxWrapper;
 import java.util.UUID;
 import java.util.function.Supplier;
 
+import static java.util.UUID.randomUUID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static rgo.wm.common.test.utils.random.IntRandom.randomPositiveInt;
-import static rgo.wm.common.test.utils.random.StringRandom.randomString;
+import static rgo.wm.media.tracker.test.model.generator.persistence.MediaData.randomMedia;
 
 @SuppressWarnings("unchecked")
 class TxMediaRepositoryDecoratorTest {
@@ -45,7 +45,7 @@ class TxMediaRepositoryDecoratorTest {
 
     @Test
     void findByUuid() {
-        UUID uuid = UUID.randomUUID();
+        UUID uuid = randomUUID();
         doAnswer(invocation -> {
             delegate.findByUuid(uuid);
             return null;
@@ -69,12 +69,5 @@ class TxMediaRepositoryDecoratorTest {
 
         verify(delegate).save(media);
         verify(txWrapper).tx(any(Supplier.class));
-    }
-
-    private Media randomMedia() {
-        return Media.builder()
-                .setName(randomString())
-                .setYear(randomPositiveInt())
-                .build();
     }
 }

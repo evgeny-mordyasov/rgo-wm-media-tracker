@@ -1,6 +1,7 @@
-package rgo.wm.media.tracker.rest.api;
+package rgo.wm.media.tracker.rest;
 
 import rgo.wm.common.utils.rest.api.HttpResponse;
+import rgo.wm.media.tracker.rest.api.MediaRestService;
 import rgo.wm.media.tracker.rest.api.request.MediaGetByUuidRequest;
 import rgo.wm.media.tracker.rest.api.request.MediaSaveRequest;
 import rgo.wm.media.tracker.rest.api.response.MediaGetByUuidResponse;

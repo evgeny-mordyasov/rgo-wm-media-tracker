@@ -8,10 +8,9 @@ import rgo.wm.media.tracker.rest.api.request.MediaSaveRequest;
 import rgo.wm.media.tracker.service.api.MediaDto;
 import rgo.wm.media.tracker.service.api.MediaService;
 
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
-
-import static rgo.wm.common.test.utils.random.StringRandom.randomString;
+import static rgo.wm.common.test.utils.random.StringRandom.randomUUIDAsString;
+import static rgo.wm.media.tracker.test.model.generator.rest.MediaRqData.randomSaveRequest;
+import static rgo.wm.media.tracker.test.model.generator.service.MediaDtoData.randomMediaDto;
 
 class MediaRestControllerTest extends AbstractTest {
 
@@ -64,7 +63,7 @@ class MediaRestControllerTest extends AbstractTest {
 
     @Test
     void findByUuid_notFound() {
-        String fakeUuid = UUID.randomUUID().toString();
+        String fakeUuid = randomUUIDAsString();
 
         CLIENT.get()
                 .uri(url() + "/" + fakeUuid)
@@ -92,9 +91,8 @@ class MediaRestControllerTest extends AbstractTest {
 
     @Test
     void save_nameIsNull() {
-        MediaSaveRequest rq = new MediaSaveRequest();
+        MediaSaveRequest rq = randomSaveRequest();
         rq.setName(null);
-        rq.setYear(randomYear());
 
         CLIENT.post()
                 .uri(url())
@@ -109,9 +107,8 @@ class MediaRestControllerTest extends AbstractTest {
 
     @Test
     void save_nameIsEmpty() {
-        MediaSaveRequest rq = new MediaSaveRequest();
+        MediaSaveRequest rq = randomSaveRequest();
         rq.setName("");
-        rq.setYear(randomYear());
 
         CLIENT.post()
                 .uri(url())
@@ -126,8 +123,7 @@ class MediaRestControllerTest extends AbstractTest {
 
     @Test
     void save_yearIsInvalid() {
-        MediaSaveRequest rq = new MediaSaveRequest();
-        rq.setName(randomString());
+        MediaSaveRequest rq = randomSaveRequest();
         rq.setYear(1894);
 
         CLIENT.post()
@@ -143,9 +139,7 @@ class MediaRestControllerTest extends AbstractTest {
 
     @Test
     void save() {
-        MediaSaveRequest rq = new MediaSaveRequest();
-        rq.setName(randomString());
-        rq.setYear(randomYear());
+        MediaSaveRequest rq = randomSaveRequest();
 
         CLIENT.post()
                 .uri(url())
@@ -161,16 +155,5 @@ class MediaRestControllerTest extends AbstractTest {
 
     private String url() {
         return baseUrl() + "/api/v1/media";
-    }
-
-    private MediaDto randomMediaDto() {
-        return MediaDto.builder()
-                .setName(randomString())
-                .setYear(randomYear())
-                .build();
-    }
-
-    private short randomYear() {
-        return (short) ThreadLocalRandom.current().nextInt(1895, 2024);
     }
 }

@@ -10,30 +10,23 @@
         <version>24.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rgo-wm-media-tracker-rest-api</artifactId>
+    <artifactId>rgo-wm-media-tracker-rest</artifactId>
 
     <dependencies>
-        <!-- rgo-wm modules -->
+        <!-- self-modules -->
         <dependency>
             <groupId>ru.gold.ordance</groupId>
-            <artifactId>rgo-wm-common-utils-rest-api</artifactId>
+            <artifactId>rgo-wm-media-tracker-rest-api</artifactId>
         </dependency>
         <dependency>
             <groupId>ru.gold.ordance</groupId>
-            <artifactId>rgo-wm-media-tracker-service-api</artifactId>
+            <artifactId>rgo-wm-media-tracker-service</artifactId>
         </dependency>
         <dependency>
             <groupId>ru.gold.ordance</groupId>
-            <artifactId>rgo-wm-common-test-utils-random</artifactId>
+            <artifactId>rgo-wm-media-tracker-test-model-generator</artifactId>
         </dependency>
-        <!-- /rgo-wm modules -->
-
-        <!-- rgo-wm modules -->
-        <dependency>
-            <groupId>ru.gold.ordance</groupId>
-            <artifactId>rgo-wm-common-utils-validator</artifactId>
-        </dependency>
-        <!-- /rgo-wm modules -->
+        <!-- /self-modules -->
 
         <!-- test -->
         <dependency>

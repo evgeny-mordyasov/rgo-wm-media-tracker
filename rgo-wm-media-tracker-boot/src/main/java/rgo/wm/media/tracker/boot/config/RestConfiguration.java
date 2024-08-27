@@ -6,8 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rgo.wm.common.utils.rest.api.HttpResponse;
 import rgo.wm.common.utils.validator.ValidatorAdapter;
+import rgo.wm.media.tracker.rest.ValidationMediaRestServiceDecorator;
 import rgo.wm.media.tracker.rest.api.MediaRestService;
-import rgo.wm.media.tracker.rest.api.MediaRestServiceImpl;
+import rgo.wm.media.tracker.rest.MediaRestServiceImpl;
 import rgo.wm.media.tracker.rest.api.request.MediaGetByUuidRequest;
 import rgo.wm.media.tracker.rest.api.request.MediaSaveRequest;
 import rgo.wm.media.tracker.service.api.MediaService;
@@ -28,7 +29,9 @@ public class RestConfiguration {
 
     @Bean
     public MediaRestService restService(MediaService service, ValidatorAdapter validator) {
-        return new MediaRestServiceImpl(service).withValidation(validator);
+        return new ValidationMediaRestServiceDecorator(
+                validator,
+                new MediaRestServiceImpl(service));
     }
 
     @RestController

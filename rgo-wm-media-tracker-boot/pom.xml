@@ -16,11 +16,15 @@
         <!-- self-modules -->
         <dependency>
             <groupId>ru.gold.ordance</groupId>
-            <artifactId>rgo-wm-media-tracker-rest-api</artifactId>
+            <artifactId>rgo-wm-media-tracker-rest</artifactId>
         </dependency>
         <dependency>
             <groupId>ru.gold.ordance</groupId>
             <artifactId>rgo-wm-media-tracker-it</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ru.gold.ordance</groupId>
+            <artifactId>rgo-wm-media-tracker-test-model-generator</artifactId>
         </dependency>
         <!-- /self-modules -->
 

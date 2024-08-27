@@ -11,14 +11,16 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>rgo-wm-media-tracker-boot</module>
+        <module>rgo-wm-media-tracker-rest-api</module>
+        <module>rgo-wm-media-tracker-rest</module>
         <module>rgo-wm-media-tracker-service-api</module>
         <module>rgo-wm-media-tracker-service</module>
-        <module>rgo-wm-media-tracker-rest-api</module>
-        <module>rgo-wm-media-tracker-boot</module>
         <module>rgo-wm-media-tracker-persistence-api</module>
         <module>rgo-wm-media-tracker-persistence</module>
         <module>rgo-wm-media-tracker-db-migration</module>
         <module>rgo-wm-media-tracker-it</module>
+        <module>rgo-wm-media-tracker-test-model-generator</module>
     </modules>
 
     <properties>
@@ -51,6 +53,11 @@
             </dependency>
             <dependency>
                 <groupId>ru.gold.ordance</groupId>
+                <artifactId>rgo-wm-media-tracker-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.gold.ordance</groupId>
                 <artifactId>rgo-wm-media-tracker-service-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -77,6 +84,12 @@
             <dependency>
                 <groupId>ru.gold.ordance</groupId>
                 <artifactId>rgo-wm-media-tracker-it</artifactId>
+                <version>${project.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ru.gold.ordance</groupId>
+                <artifactId>rgo-wm-media-tracker-test-model-generator</artifactId>
                 <version>${project.version}</version>
                 <scope>test</scope>
             </dependency>

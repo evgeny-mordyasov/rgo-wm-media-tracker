@@ -18,6 +18,10 @@
             <groupId>ru.gold.ordance</groupId>
             <artifactId>rgo-wm-common-test-utils-random</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ru.gold.ordance</groupId>
+            <artifactId>rgo-wm-media-tracker-test-model-generator</artifactId>
+        </dependency>
         <!-- /rgo-wm modules -->
 
         <!-- self-modules -->
