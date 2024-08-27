@@ -1,0 +1,24 @@
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+---
+spring:
+  config:
+    activate:
+      on-profile: main-test
+
+logging:
+  config: classpath:logback-main-test.xml
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  main:
+    banner-mode: off
+
+logging:
+  config: classpath:logback-test.xml

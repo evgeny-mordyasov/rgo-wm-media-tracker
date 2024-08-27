@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
-    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
-
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <Target>System.out</Target>
         <encoder>
             <pattern>
-                %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%-5p) %clr([%thread]){magenta} %clr(%c){cyan}: %m%n%wEx
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c: %m%n
             </pattern>
         </encoder>
     </appender>
 
-    <root level="info">
+    <root level="off">
         <appender-ref ref="stdout"/>
     </root>
 </configuration>
