@@ -25,6 +25,8 @@ import rgo.wm.media.tracker.service.api.GenreService;
 import rgo.wm.media.tracker.service.api.MediaService;
 import rgo.wm.spring.web.InfoRequestLoggingFilter;
 
+import static org.springframework.http.ResponseEntity.status;
+
 @Configuration
 public class RestConfiguration {
 
@@ -70,16 +72,14 @@ public class RestConfiguration {
         @GetMapping
         public ResponseEntity<HttpResponse> findAll() {
             HttpResponse response = service.findAll();
-            return ResponseEntity
-                    .status(response.status().httpCode())
+            return status(response.status().httpCode())
                     .body(response);
         }
 
         @GetMapping("/{uuid}")
         public ResponseEntity<HttpResponse> findByUuid(@PathVariable("uuid") String uuid) {
             HttpResponse response = service.findByUuid(GenreGetByUuidRequest.of(uuid));
-            return ResponseEntity
-                    .status(response.status().httpCode())
+            return status(response.status().httpCode())
                     .body(response);
         }
     }
@@ -97,24 +97,21 @@ public class RestConfiguration {
         @GetMapping
         public ResponseEntity<HttpResponse> findAll() {
             HttpResponse response = service.findAll();
-            return ResponseEntity
-                    .status(response.status().httpCode())
+            return status(response.status().httpCode())
                     .body(response);
         }
 
         @GetMapping("/{uuid}")
         public ResponseEntity<HttpResponse> findByUuid(@PathVariable("uuid") String uuid) {
             HttpResponse response = service.findByUuid(MediaGetByUuidRequest.of(uuid));
-            return ResponseEntity
-                    .status(response.status().httpCode())
+            return status(response.status().httpCode())
                     .body(response);
         }
 
         @PostMapping
         public ResponseEntity<HttpResponse> save(@RequestBody MediaSaveRequest rq) {
             HttpResponse response = service.save(rq);
-            return ResponseEntity
-                    .status(response.status().httpCode())
+            return status(response.status().httpCode())
                     .body(response);
         }
     }
