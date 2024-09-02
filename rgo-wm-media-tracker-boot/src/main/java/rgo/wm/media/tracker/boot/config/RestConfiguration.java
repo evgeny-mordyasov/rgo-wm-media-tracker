@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import rgo.wm.common.utils.rest.api.HttpResponse;
-import rgo.wm.common.utils.validator.ValidatorAdapter;
+import rgo.wm.common.utils.validator.Validators;
+import rgo.wm.common.utils.validator.rest.RestValidatorAdapter;
 import rgo.wm.media.tracker.rest.InternalGenreRestService;
+import rgo.wm.media.tracker.rest.InternalMediaRestService;
 import rgo.wm.media.tracker.rest.ValidationGenreRestServiceDecorator;
 import rgo.wm.media.tracker.rest.ValidationMediaRestServiceDecorator;
 import rgo.wm.media.tracker.rest.api.GenreRestService;
 import rgo.wm.media.tracker.rest.api.MediaRestService;
-import rgo.wm.media.tracker.rest.InternalMediaRestService;
 import rgo.wm.media.tracker.rest.api.request.GenreGetByUuidRequest;
 import rgo.wm.media.tracker.rest.api.request.MediaGetByUuidRequest;
 import rgo.wm.media.tracker.rest.api.request.MediaSaveRequest;
@@ -38,14 +39,19 @@ public class RestConfiguration {
     }
 
     @Bean
-    public GenreRestService genreRestService(GenreService genreService, ValidatorAdapter validator) {
+    public RestValidatorAdapter restValidatorAdapter() {
+        return new RestValidatorAdapter(Validators.createValidator());
+    }
+
+    @Bean
+    public GenreRestService genreRestService(GenreService genreService, RestValidatorAdapter validator) {
         return new ValidationGenreRestServiceDecorator(
                 validator,
                 new InternalGenreRestService(genreService));
     }
 
     @Bean
-    public MediaRestService mediaRestService(MediaService mediaService, ValidatorAdapter validator) {
+    public MediaRestService mediaRestService(MediaService mediaService, RestValidatorAdapter validator) {
         return new ValidationMediaRestServiceDecorator(
                 validator,
                 new InternalMediaRestService(mediaService));

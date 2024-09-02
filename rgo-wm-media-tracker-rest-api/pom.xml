@@ -31,7 +31,7 @@
         <!-- rgo-wm modules -->
         <dependency>
             <groupId>ru.gold.ordance</groupId>
-            <artifactId>rgo-wm-common-utils-validator</artifactId>
+            <artifactId>rgo-wm-common-utils-validator-rest</artifactId>
         </dependency>
         <!-- /rgo-wm modules -->
 

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import rgo.wm.common.utils.rest.api.ErrorDetail;
 import rgo.wm.common.utils.rest.api.HttpResponse;
 import rgo.wm.common.utils.rest.api.InvalidRqHttpResponse;
-import rgo.wm.common.utils.validator.ValidatorAdapter;
+import rgo.wm.common.utils.validator.rest.RestValidatorAdapter;
 import rgo.wm.media.tracker.rest.api.GenreRestService;
 import rgo.wm.media.tracker.rest.api.request.GenreGetByUuidRequest;
 
@@ -15,7 +15,7 @@ import static rgo.wm.common.utils.validator.Validators.createValidator;
 
 class ValidationGenreRestServiceDecoratorTest {
 
-    private static final ValidatorAdapter VALIDATOR = createValidator();
+    private static final RestValidatorAdapter VALIDATOR = new RestValidatorAdapter(createValidator());
 
     private GenreRestService restService;
 

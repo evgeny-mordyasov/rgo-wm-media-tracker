@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import rgo.wm.common.utils.rest.api.ErrorDetail;
 import rgo.wm.common.utils.rest.api.HttpResponse;
 import rgo.wm.common.utils.rest.api.InvalidRqHttpResponse;
-import rgo.wm.common.utils.validator.ValidatorAdapter;
+import rgo.wm.common.utils.validator.rest.RestValidatorAdapter;
 import rgo.wm.media.tracker.rest.api.MediaRestService;
 import rgo.wm.media.tracker.rest.api.request.MediaGetByUuidRequest;
 import rgo.wm.media.tracker.rest.api.request.MediaSaveRequest;
@@ -21,7 +21,7 @@ import static rgo.wm.media.tracker.test.model.generator.service.MediaDtoData.ran
 
 class ValidationMediaRestServiceDecoratorTest {
 
-    private static final ValidatorAdapter VALIDATOR = createValidator();
+    private static final RestValidatorAdapter VALIDATOR = new RestValidatorAdapter(createValidator());
 
     private MediaRestService restService;
     private MediaRestService delegate;
