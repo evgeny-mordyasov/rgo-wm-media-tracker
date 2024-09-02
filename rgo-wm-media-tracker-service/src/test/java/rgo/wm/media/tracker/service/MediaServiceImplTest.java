@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import rgo.wm.media.tracker.persistence.api.Media;
 import rgo.wm.media.tracker.persistence.api.MediaRepository;
+import rgo.wm.media.tracker.service.MediaServiceImpl.MediaMapper;
 import rgo.wm.media.tracker.service.api.MediaDto;
 
 import java.util.Collections;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -27,7 +29,8 @@ class MediaServiceImplTest {
     @BeforeEach
     void setUp() {
         repository = mock(MediaRepository.class);
-        service = new MediaServiceImpl(repository);
+        var mapper = MediaMapper.defaultMapper();
+        service = new MediaServiceImpl(repository, mapper);
     }
 
     @Test
@@ -52,7 +55,7 @@ class MediaServiceImplTest {
 
     @Test
     void findByUuid_empty() {
-        UUID uuid = UUID.randomUUID();
+        UUID uuid = randomUUID();
         when(repository.findByUuid(uuid)).thenReturn(Optional.empty());
 
         Optional<MediaDto> opt = service.findByUuid(uuid);
@@ -63,6 +66,7 @@ class MediaServiceImplTest {
     @Test
     void findByUuid() {
         Media media = randomPersistentMedia();
+        assert media.getUuid() != null;
         when(repository.findByUuid(media.getUuid())).thenReturn(Optional.of(media));
 
         Optional<MediaDto> opt = service.findByUuid(media.getUuid());

@@ -3,8 +3,7 @@ package rgo.wm.media.tracker.service.api;
 import org.junit.jupiter.api.Test;
 import rgo.wm.common.utils.asserts.AssertsException;
 
-import java.util.UUID;
-
+import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -15,32 +14,20 @@ class MediaDtoTest {
 
     @Test
     void successBuild() {
-        MediaDto.Builder builder = MediaDto.builder()
-                .setUuid(UUID.randomUUID())
-                .setName(randomString())
-                .setYear(randomPositiveInt());
-
-        assertThatNoException().isThrownBy(builder::build);
+        assertThatNoException()
+                .isThrownBy(randomDefaultBuilder()::build);
     }
 
     @Test
     void gettersReturnNonNull() {
-        MediaDto media = MediaDto.builder()
-                .setUuid(UUID.randomUUID())
-                .setName(randomString())
-                .setYear(randomPositiveInt())
-                .build();
+        var media = randomDefaultBuilder().build();
 
         assertThat(media.getName()).isNotNull();
     }
 
     @Test
     void nameIsNull() {
-        MediaDto.Builder builder = MediaDto.builder()
-                .setUuid(UUID.randomUUID())
-                .setName(null)
-                .setYear(randomPositiveInt());
-
+        var builder = randomDefaultBuilder().setName(null);
         assertThatThrownBy(builder::build)
                 .isInstanceOf(AssertsException.class)
                 .hasMessage("'name' must not be null");
@@ -48,13 +35,16 @@ class MediaDtoTest {
 
     @Test
     void yearIsNegative() {
-        MediaDto.Builder builder = MediaDto.builder()
-                .setUuid(UUID.randomUUID())
-                .setName(randomString())
-                .setYear(-randomPositiveInt());
-
+        var builder = randomDefaultBuilder().setYear(-randomPositiveInt());
         assertThatThrownBy(builder::build)
                 .isInstanceOf(AssertsException.class)
                 .hasMessage("'year' must not be negative");
+    }
+
+    private MediaDto.Builder randomDefaultBuilder() {
+        return MediaDto.builder()
+                .setUuid(randomUUID())
+                .setName(randomString())
+                .setYear(randomPositiveInt());
     }
 }

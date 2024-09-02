@@ -43,8 +43,8 @@ public class GenreServiceImpl implements GenreService {
         GenreDto map(Genre genre);
 
         static GenreMapper defaultMapper() {
-
             return new GenreMapper() {
+
                 @Override
                 public Genre map(GenreDto dto) {
                     return Genre.builder()

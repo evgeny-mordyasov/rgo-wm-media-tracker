@@ -13,47 +13,59 @@ import java.util.UUID;
 public class MediaServiceImpl implements MediaService {
 
     private final MediaRepository repository;
+    private final MediaMapper mapper;
 
-    public MediaServiceImpl(MediaRepository repository) {
+    public MediaServiceImpl(MediaRepository repository, MediaMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     @Nonnull
     @Override
     public List<MediaDto> findAll() {
         List<Media> media = repository.findAll();
-        return convert(media);
+        return media.stream().map(mapper::map).toList();
     }
 
     @Override
-    public Optional<MediaDto> findByUuid(UUID uuid) {
-        return repository.findByUuid(uuid).map(this::convert);
-    }
-
-    private List<MediaDto> convert(List<Media> media) {
-        return media.stream().map(this::convert).toList();
-    }
-
-    private MediaDto convert(Media media) {
-        return MediaDto.builder()
-                .setUuid(media.getUuid())
-                .setName(media.getName())
-                .setYear(media.getYear())
-                .build();
+    public Optional<MediaDto> findByUuid(@Nonnull UUID uuid) {
+        return repository.findByUuid(uuid).map(mapper::map);
     }
 
     @Nonnull
     @Override
     public MediaDto save(@Nonnull MediaDto media) {
-        Media saved = repository.save(convert(media));
-        return convert(saved);
+        Media saved = repository.save(mapper.map(media));
+        return mapper.map(saved);
     }
 
-    private Media convert(MediaDto dto) {
-        return Media.builder()
-                .setUuid(dto.getUuid())
-                .setName(dto.getName())
-                .setYear(dto.getYear())
-                .build();
+    public interface MediaMapper {
+
+        Media map(MediaDto dto);
+
+        MediaDto map(Media media);
+
+        static MediaMapper defaultMapper() {
+            return new MediaMapper() {
+
+                @Override
+                public Media map(MediaDto dto) {
+                    return Media.builder()
+                            .setUuid(dto.getUuid())
+                            .setName(dto.getName())
+                            .setYear(dto.getYear())
+                            .build();
+                }
+
+                @Override
+                public MediaDto map(Media media) {
+                    return MediaDto.builder()
+                            .setUuid(media.getUuid())
+                            .setName(media.getName())
+                            .setYear(media.getYear())
+                            .build();
+                }
+            };
+        }
     }
 }

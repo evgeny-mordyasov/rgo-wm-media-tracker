@@ -9,6 +9,7 @@ import rgo.wm.media.tracker.persistence.api.MediaRepository;
 import rgo.wm.media.tracker.service.GenreServiceImpl;
 import rgo.wm.media.tracker.service.GenreServiceImpl.GenreMapper;
 import rgo.wm.media.tracker.service.MediaServiceImpl;
+import rgo.wm.media.tracker.service.MediaServiceImpl.MediaMapper;
 import rgo.wm.media.tracker.service.api.GenreService;
 import rgo.wm.media.tracker.service.api.MediaService;
 
@@ -31,7 +32,12 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public MediaService mediaService(MediaRepository repository) {
-        return new MediaServiceImpl(repository);
+    public MediaMapper mediaMapper() {
+        return MediaMapper.defaultMapper();
+    }
+
+    @Bean
+    public MediaService mediaService(MediaRepository repository, MediaMapper mapper) {
+        return new MediaServiceImpl(repository, mapper);
     }
 }
