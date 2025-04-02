@@ -5,7 +5,7 @@ import rgo.wm.media.tracker.persistence.api.GenreRepository;
 import rgo.wm.media.tracker.service.api.GenreDto;
 import rgo.wm.media.tracker.service.api.GenreService;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

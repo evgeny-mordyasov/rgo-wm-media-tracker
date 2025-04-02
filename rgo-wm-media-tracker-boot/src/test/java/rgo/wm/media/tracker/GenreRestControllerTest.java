@@ -15,20 +15,24 @@ class GenreRestControllerTest extends AbstractTest {
 
     @Autowired private GenreService service;
 
-    // TODO:
-//    @Test
-//    void findAll() {
-//        CLIENT.get()
-//                .uri(url())
-//                .exchange()
-//                .expectStatus().isOk()
-//                .expectBody()
-//                .jsonPath("status.code").isEqualTo(HttpResponse.SUCCESSFUL_STATUS.code())
-//                .jsonPath("media").isNotEmpty()
-//                .jsonPath("media[0].uuid").isEqualTo(saved.getUuid().toString())
-//                .jsonPath("media[0].name").isEqualTo(saved.getName())
-//                .jsonPath("media[0].year").isEqualTo(saved.getYear());
-//    }
+    @Test
+    void findAll_empty() {
+        CLIENT.get()
+                .uri(url())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("status.code").isEqualTo(HttpResponse.SUCCESSFUL_STATUS.code())
+                .jsonPath("genres[0].uuid").isNotEmpty()
+                .jsonPath("genres[0].name").isEqualTo("Аниме")
+                .jsonPath("genres[0].description").isNotEmpty()
+                .jsonPath("genres[1].uuid").isNotEmpty()
+                .jsonPath("genres[1].name").isEqualTo("Мистика")
+                .jsonPath("genres[1].description").isNotEmpty()
+                .jsonPath("genres[2].uuid").isNotEmpty()
+                .jsonPath("genres[2].name").isEqualTo("Драма")
+                .jsonPath("genres[2].description").isNotEmpty();
+    }
 
     @Test
     void findByUuid_uuidIsInvalid() {

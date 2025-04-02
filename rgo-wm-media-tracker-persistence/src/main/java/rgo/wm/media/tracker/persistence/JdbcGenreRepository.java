@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.simple.JdbcClient;
 import rgo.wm.media.tracker.persistence.api.Genre;
 import rgo.wm.media.tracker.persistence.api.GenreRepository;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

@@ -1,7 +1,7 @@
 package rgo.wm.media.tracker.persistence.api;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.Objects;
 import java.util.UUID;
 

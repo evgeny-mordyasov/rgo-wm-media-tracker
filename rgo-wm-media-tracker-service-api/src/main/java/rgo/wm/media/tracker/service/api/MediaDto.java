@@ -2,8 +2,8 @@ package rgo.wm.media.tracker.service.api;
 
 import rgo.wm.common.utils.asserts.Asserts;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.Objects;
 import java.util.UUID;
 
