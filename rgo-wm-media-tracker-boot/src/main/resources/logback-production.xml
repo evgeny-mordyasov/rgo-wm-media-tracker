@@ -30,6 +30,7 @@
 
     <logger name="rgo.wm" level="info"/>
     <logger name="org.springframework" level="warn"/>
+    <logger name="org.zalando.logbook" level="info"/>
 
     <root level="info">
         <appender-ref ref="file"/>

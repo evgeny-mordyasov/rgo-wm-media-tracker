@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.zalando.logbook.HttpLogFormatter;
+import org.zalando.logbook.Logbook;
+import org.zalando.logbook.core.DefaultSink;
 import rgo.wm.common.utils.rest.api.HttpResponse;
 import rgo.wm.common.utils.validator.Validators;
 import rgo.wm.common.utils.validator.rest.RestValidatorAdapter;
@@ -23,7 +26,7 @@ import rgo.wm.media.tracker.rest.api.request.MediaGetByUuidRequest;
 import rgo.wm.media.tracker.rest.api.request.MediaSaveRequest;
 import rgo.wm.media.tracker.service.api.GenreService;
 import rgo.wm.media.tracker.service.api.MediaService;
-import rgo.wm.spring.web.InfoRequestLoggingFilter;
+import rgo.wm.spring.web.InfoHttpLogWriter;
 
 import static org.springframework.http.ResponseEntity.status;
 
@@ -31,13 +34,13 @@ import static org.springframework.http.ResponseEntity.status;
 public class RestConfiguration {
 
     @Bean
-    public InfoRequestLoggingFilter logFilter() {
-        InfoRequestLoggingFilter filter = new InfoRequestLoggingFilter();
-        filter.setIncludeQueryString(true);
-        filter.setIncludePayload(true);
-        filter.setMaxPayloadLength(1000);
-        filter.setIncludeHeaders(true);
-        return filter;
+    public Logbook logbook(HttpLogFormatter logFormatter) {
+        return Logbook.builder()
+                .sink(new DefaultSink(
+                        logFormatter,
+                        new InfoHttpLogWriter()
+                ))
+                .build();
     }
 
     @Bean
