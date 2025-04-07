@@ -1,4 +1,4 @@
-package rgo.wm.media.tracker;
+package rgo.wm.media.tracker.boot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

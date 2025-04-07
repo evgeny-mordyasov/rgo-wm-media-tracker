@@ -1,4 +1,4 @@
-package rgo.wm.media.tracker;
+package rgo.wm.media.tracker.boot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.actuate.health.Status;

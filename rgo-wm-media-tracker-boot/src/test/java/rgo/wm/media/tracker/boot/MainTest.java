@@ -1,4 +1,4 @@
-package rgo.wm.media.tracker;
+package rgo.wm.media.tracker.boot;
 
 import org.springframework.boot.SpringApplication;
 import rgo.wm.media.tracker.it.Containers;

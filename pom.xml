@@ -29,7 +29,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- rgo-wm-dependencies -->
         <rgo-wm-dependencies.version>24.0.0-SNAPSHOT</rgo-wm-dependencies.version>
     </properties>
 
