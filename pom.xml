@@ -21,6 +21,7 @@
         <module>rgo-wm-media-tracker-db-migration</module>
         <module>rgo-wm-media-tracker-it</module>
         <module>rgo-wm-media-tracker-test-model-generator</module>
+        <module>rgo-wm-media-tracker-client</module>
     </modules>
 
     <properties>
